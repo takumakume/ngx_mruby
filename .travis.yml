@@ -34,11 +34,11 @@ env:
     NGINX_SRC_PATCH=2
 
 before_script:
-  - open_ssl_version=1.1.1
-  - curl -sfL https://www.openssl.org/source/openssl-${open_ssl_version}-latest.tar.gz -o openssl-${open_ssl_version}.tar.gz
-  - tar -xzf openssl-${open_ssl_version}.tar.gz
-  - rm openssl-${open_ssl_version}.tar.gz
-  - cd openssl-${open_ssl_version}*
+  - openssl_version=1.1.1
+  - curl -sfL https://www.openssl.org/source/openssl-${openssl_version}-latest.tar.gz -o openssl-${openssl_version}.tar.gz
+  - tar -xzf openssl-${openssl_version}.tar.gz
+  - rm openssl-${openssl_version}.tar.gz
+  - cd openssl-${openssl_version}*
   - ./config --prefix=/usr/local --shared zlib -fPIC enable-tlsext >> /dev/null 2>&1
   - make >> /dev/null 2>&1
   - sudo make install >> /dev/null 2>&1
