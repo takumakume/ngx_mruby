@@ -13,6 +13,7 @@ install:
   - sudo apt-get -qq install rake bison git gperf zlib1g-dev g++-4.9 libstdc++-4.9-dev
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - $CXX -v
+  - alias gcc=gcc-4.9
 env:
   - NGINX_SRC_MAJOR=1
     NGINX_SRC_MINOR=17
