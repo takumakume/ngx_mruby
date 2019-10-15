@@ -9,10 +9,10 @@ before_install:
   - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
   - sudo apt-get -qq update
 install:
-  - sudo apt-get -qq remove gcc g++
-  - sudo apt-get -qq install rake bison git gperf zlib1g-dev gcc-4.9 g++-4.9 libstdc++-4.9-dev
+  - sudo apt-get -qq install rake bison git gperf zlib1g-dev g++-4.9 libstdc++-4.9-dev
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - $CXX -v
+  - gcc -v
 env:
   - NGINX_SRC_MAJOR=1
     NGINX_SRC_MINOR=17
