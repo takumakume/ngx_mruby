@@ -1,10 +1,14 @@
 sudo: required
+dist: bionic
 matrix:
   include:
-    - os: linux
+    - name: "test for openssl-1.0.x"
+      os: linux
       dist: trusty
-    - os: linux
-      dist: bionic
+      env:
+      - NGINX_SRC_MAJOR=1
+        NGINX_SRC_MINOR=17
+        NGINX_SRC_PATCH=3
 language: cpp
 compiler:
   - gcc
