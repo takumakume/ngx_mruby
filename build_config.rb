@@ -6,6 +6,7 @@ MRuby::Build.new('host') do |conf|
 
   conf.cc do |cc|
     cc.flags << ENV['NGX_MRUBY_CFLAGS'] if ENV['NGX_MRUBY_CFLAGS']
+    cc.command << ENV['CC'] || 'gcc'
   end
 
   conf.linker do |linker|
@@ -57,10 +58,6 @@ MRuby::Build.new('host') do |conf|
   # Linux only for ngx_mruby
   # conf.gem :github => 'matsumotory/mruby-capability'
   # conf.gem :github => 'matsumotory/mruby-cgroup'
-  
-  conf.cc do |cc|
-    cc.command = ENV['CC'] || 'gcc'
-  end
 end
 
 MRuby::Build.new('test') do |conf|

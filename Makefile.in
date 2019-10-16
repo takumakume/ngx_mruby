@@ -69,7 +69,7 @@ clobber: clean_mruby clean
 build_mruby: $(MRUBY_BUILD_DEPEND_TARGETS)
 	$(CXX) -v
 	$(CC) -v
-	cd $(MRUBY_ROOT) && export CXX="g++-4.9" CC="gcc-4.9" && $(RAKE) MRUBY_CONFIG=$(NGX_MRUBY_ROOT)/build_config.rb NGX_MRUBY_CFLAGS="$(NGX_MRUBY_CFLAGS)"
+	cd $(MRUBY_ROOT) && $(RAKE) MRUBY_CONFIG=$(NGX_MRUBY_ROOT)/build_config.rb NGX_MRUBY_CFLAGS="$(NGX_MRUBY_CFLAGS)"
 
 clean_mruby:
 	cd $(MRUBY_ROOT) && $(RAKE) deep_clean && rm -rf build

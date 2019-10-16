@@ -7,6 +7,9 @@
 
 set -e
 
+$CXX -v
+$CC -v
+
 . ./nginx_version
 
 # OS specific configuration
