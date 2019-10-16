@@ -1,5 +1,10 @@
 sudo: required
-dist: bionic
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+    - os: linux
+      dist: bionic
 language: cpp
 compiler:
   - gcc
@@ -36,7 +41,9 @@ env:
     NGINX_SRC_PATCH=2
 
 before_script:
-  - openssl_version=1.1.1
+  - openssl_version="1.1.1"
+  - codename=`cat /etc/os-release | grep UBUNTU_CODENAME | awk -F'=' '{print $2}'` && if [ "${codename}" != "bionic" ]; then openssl_version="1.0.2"; fi
+  - echo ${openssl_version}
   - curl -sfL https://www.openssl.org/source/openssl-${openssl_version}-latest.tar.gz -o openssl-${openssl_version}.tar.gz
   - tar -xzf openssl-${openssl_version}.tar.gz
   - rm openssl-${openssl_version}.tar.gz
