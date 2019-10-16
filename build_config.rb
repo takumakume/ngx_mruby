@@ -6,7 +6,6 @@ MRuby::Build.new('host') do |conf|
 
   conf.cc do |cc|
     cc.flags << ENV['NGX_MRUBY_CFLAGS'] if ENV['NGX_MRUBY_CFLAGS']
-    cc.command << ENV['CC'] || 'gcc'
   end
 
   conf.linker do |linker|
@@ -82,4 +81,5 @@ MRuby::Build.new('test') do |conf|
 
   # include the default GEMs
   conf.gembox 'full-core'
+
 end
