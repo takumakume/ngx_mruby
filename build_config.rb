@@ -61,7 +61,7 @@ end
 
 MRuby::Build.new('test') do |conf|
   # load specific toolchain settings
-
+  toolchain :gcc
   # Gets set by the VS command prompts.
   if ENV['VisualStudioVersion'] || ENV['VSINSTALLDIR']
     toolchain :visualcpp
