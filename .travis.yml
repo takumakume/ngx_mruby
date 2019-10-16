@@ -9,12 +9,8 @@ before_install:
   - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
   - sudo apt-get -qq update
 install:
-  - sudo apt-get -qq remove gcc g++
   - sudo apt-get -qq install rake bison git gperf zlib1g-dev g++-4.9 libstdc++-4.9-dev
-  #- sudo ln -s /usr/bin/gcc-4.9 /usr/bin/gcc
-  #- sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++
-  #- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-  - export CXX="g++-4.9" CC="gcc-4.9" LD="gcc-4.9"
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9" LD="gcc-4.9"; fi
   - $CXX -v
 env:
   - NGINX_SRC_MAJOR=1
@@ -57,8 +53,6 @@ script:
   - echo "NGINX_SRC_MINOR=${NGINX_SRC_MINOR}" >> nginx_version
   - echo "NGINX_SRC_PATCH=${NGINX_SRC_PATCH}" >> nginx_version
   - echo "NGINX_SRC_VER=nginx-${NGINX_SRC_MAJOR}.${NGINX_SRC_MINOR}.${NGINX_SRC_PATCH}" >> nginx_version
-  - $CXX -v
-  - $CC -v
   - sh test.sh
 
 after_failure:

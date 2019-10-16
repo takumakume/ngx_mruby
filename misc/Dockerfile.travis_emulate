@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:bionic
 ## emulates Travis.ci environment
 # Usage:
 #   build:
@@ -8,13 +8,15 @@ FROM ubuntu:14.04
 #       or,
 #     docker run -it -v `pwd`:/ngx_mruby ngx_mruby:branch_name
 
+RUN echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main" >> /etc/apt/sources.list && \
+    echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get install -y bash-completion apt-file software-properties-common && apt-file update
 RUN add-apt-repository --yes ppa:ubuntu-toolchain-r/test && apt-get update
 RUN apt-get install -y \
   build-essential wget libpcre3-dev psmisc \
   rake bison git gperf zlib1g-dev g++-4.9 libstdc++-4.9-dev \
-  vim tmux
+  vim tmux curl
 
 ENV CXX "g++-4.9"
 ENV CC "gcc-4.9"
@@ -25,8 +27,8 @@ RUN curl -L https://www.openssl.org/source/openssl-1.1.1-latest.tar.gz -o openss
   cd openssl-1.1.1* && \
   ./config --prefix=/usr/local --shared zlib -fPIC  && \
   make && \
-  sudo make install && \
-  sudo ldconfig /usr/local/lib
+  make install && \
+  ldconfig /usr/local/lib
 
 ## Add or -v `pwd`:/ngx_mruby
 ADD . /ngx_mruby
