@@ -57,7 +57,10 @@ MRuby::Build.new('host') do |conf|
   # Linux only for ngx_mruby
   # conf.gem :github => 'matsumotory/mruby-capability'
   # conf.gem :github => 'matsumotory/mruby-cgroup'
-
+  
+  conf.cc do |cc|
+    cc.command = ENV['CC'] || 'gcc'
+  end
 end
 
 MRuby::Build.new('test') do |conf|
