@@ -16,6 +16,7 @@ env:
   - NGINX_SRC_MAJOR=1
     NGINX_SRC_MINOR=17
     NGINX_SRC_PATCH=5
+    WITH_OPENSSL_SRC_VERSION=1.1.1
   # - BUILD_DYNAMIC_MODULE='TRUE'
   #   NGINX_SRC_MAJOR=1
   #   NGINX_SRC_MINOR=17
@@ -53,7 +54,8 @@ script:
   - echo "NGINX_SRC_MINOR=${NGINX_SRC_MINOR}" >> nginx_version
   - echo "NGINX_SRC_PATCH=${NGINX_SRC_PATCH}" >> nginx_version
   - echo "NGINX_SRC_VER=nginx-${NGINX_SRC_MAJOR}.${NGINX_SRC_MINOR}.${NGINX_SRC_PATCH}" >> nginx_version
-  - sh test.sh --with-openssl-src=${PWD}/openssl-1.1.1
+  - if test "X$WITH_OPENSSL_SRC_VERSION" != X; then export NGX_OPENSSL_SRC="${PWD}/openssl-${WITH_OPENSSL_SRC_VERSION}"
+  - sh test.sh
 
 after_failure:
   - if [ -e build/nginx/logs/error.log ]; then cat build/nginx/logs/error.log ; else cat build_dynamic/nginx/logs/error.log; fi
