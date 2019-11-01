@@ -16,26 +16,27 @@ env:
   - NGINX_SRC_MAJOR=1
     NGINX_SRC_MINOR=17
     NGINX_SRC_PATCH=5
-  - BUILD_DYNAMIC_MODULE='TRUE'
-    NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=17
-    NGINX_SRC_PATCH=5
-  - NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=16
-    NGINX_SRC_PATCH=1
-  - BUILD_DYNAMIC_MODULE='TRUE'
-    NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=16
-    NGINX_SRC_PATCH=1
-  - NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=14
-    NGINX_SRC_PATCH=2
-  - BUILD_DYNAMIC_MODULE='TRUE'
-    NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=14
-    NGINX_SRC_PATCH=2
+  # - BUILD_DYNAMIC_MODULE='TRUE'
+  #   NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=17
+  #   NGINX_SRC_PATCH=5
+  # - NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=16
+  #   NGINX_SRC_PATCH=1
+  # - BUILD_DYNAMIC_MODULE='TRUE'
+  #   NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=16
+  #   NGINX_SRC_PATCH=1
+  # - NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=14
+  #   NGINX_SRC_PATCH=2
+  # - BUILD_DYNAMIC_MODULE='TRUE'
+  #   NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=14
+  #   NGINX_SRC_PATCH=2
 
 before_script:
+  - cd /usr/local/src
   - openssl_version=1.1.1
   - curl -sfL https://www.openssl.org/source/openssl-${openssl_version}-latest.tar.gz -o openssl-${openssl_version}.tar.gz
   - tar -xzf openssl-${openssl_version}.tar.gz
@@ -53,7 +54,7 @@ script:
   - echo "NGINX_SRC_MINOR=${NGINX_SRC_MINOR}" >> nginx_version
   - echo "NGINX_SRC_PATCH=${NGINX_SRC_PATCH}" >> nginx_version
   - echo "NGINX_SRC_VER=nginx-${NGINX_SRC_MAJOR}.${NGINX_SRC_MINOR}.${NGINX_SRC_PATCH}" >> nginx_version
-  - sh test.sh
+  - sh test.sh --with-openssl-src=/usr/local/src/openssl-1.1.1
 
 after_failure:
   - if [ -e build/nginx/logs/error.log ]; then cat build/nginx/logs/error.log ; else cat build_dynamic/nginx/logs/error.log; fi
