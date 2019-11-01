@@ -16,31 +16,36 @@ env:
   - NGINX_SRC_MAJOR=1
     NGINX_SRC_MINOR=17
     NGINX_SRC_PATCH=5
-  - BUILD_DYNAMIC_MODULE='TRUE'
-    NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=17
-    NGINX_SRC_PATCH=5
-  - NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=16
-    NGINX_SRC_PATCH=1
-  - BUILD_DYNAMIC_MODULE='TRUE'
-    NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=16
-    NGINX_SRC_PATCH=1
-  - NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=14
-    NGINX_SRC_PATCH=2
-  - BUILD_DYNAMIC_MODULE='TRUE'
-    NGINX_SRC_MAJOR=1
-    NGINX_SRC_MINOR=14
-    NGINX_SRC_PATCH=2
+    OPENSSL_SRC_VERSION=1.1.1
+  # - NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=17
+  #   NGINX_SRC_PATCH=5
+  # - BUILD_DYNAMIC_MODULE='TRUE'
+  #   NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=17
+  #   NGINX_SRC_PATCH=5
+  # - NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=16
+  #   NGINX_SRC_PATCH=1
+  # - BUILD_DYNAMIC_MODULE='TRUE'
+  #   NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=16
+  #   NGINX_SRC_PATCH=1
+  # - NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=14
+  #   NGINX_SRC_PATCH=2
+  # - BUILD_DYNAMIC_MODULE='TRUE'
+  #   NGINX_SRC_MAJOR=1
+  #   NGINX_SRC_MINOR=14
+  #   NGINX_SRC_PATCH=2
 
 before_script:
   - openssl_version=1.1.1
   - curl -sfL https://www.openssl.org/source/openssl-${openssl_version}-latest.tar.gz -o openssl-${openssl_version}.tar.gz
   - tar -xzf openssl-${openssl_version}.tar.gz
   - rm openssl-${openssl_version}.tar.gz
-  - cd openssl-${openssl_version}*
+  - mv openssl-${openssl_version}* openssl-${openssl_version}
+  - cd openssl-${openssl_version}
   - ./config --prefix=/usr/local --shared zlib -fPIC >> /dev/null 2>&1
   - make >> /dev/null 2>&1
   - sudo make install >> /dev/null 2>&1
@@ -53,7 +58,8 @@ script:
   - echo "NGINX_SRC_MINOR=${NGINX_SRC_MINOR}" >> nginx_version
   - echo "NGINX_SRC_PATCH=${NGINX_SRC_PATCH}" >> nginx_version
   - echo "NGINX_SRC_VER=nginx-${NGINX_SRC_MAJOR}.${NGINX_SRC_MINOR}.${NGINX_SRC_PATCH}" >> nginx_version
-  - sh test.sh
+  - if test "X$OPENSSL_SRC_VERSION" != X; then BUILD_OPT="--with-openssl-src=${PWD}/openssl-${OPENSSL_SRC_VERSION}"; fi
+  - sh test.sh ${BUILD_OPT}
 
 after_failure:
   - if [ -e build/nginx/logs/error.log ]; then cat build/nginx/logs/error.log ; else cat build_dynamic/nginx/logs/error.log; fi
