@@ -54,8 +54,8 @@ script:
   - echo "NGINX_SRC_MINOR=${NGINX_SRC_MINOR}" >> nginx_version
   - echo "NGINX_SRC_PATCH=${NGINX_SRC_PATCH}" >> nginx_version
   - echo "NGINX_SRC_VER=nginx-${NGINX_SRC_MAJOR}.${NGINX_SRC_MINOR}.${NGINX_SRC_PATCH}" >> nginx_version
-  - if test "X$WITH_OPENSSL_SRC_VERSION" != X; then export OPT="--with-openssl-src=${PWD}/openssl-${WITH_OPENSSL_SRC_VERSION}"; fi
-  - sh test.sh ${OPT}
+  - if test "X$WITH_OPENSSL_SRC_VERSION" != X; then sh build.sh --with-openssl-src=${PWD}/openssl-${WITH_OPENSSL_SRC_VERSION}"; fi
+  - sh test.sh
 
 after_failure:
   - if [ -e build/nginx/logs/error.log ]; then cat build/nginx/logs/error.log ; else cat build_dynamic/nginx/logs/error.log; fi
