@@ -138,6 +138,7 @@ openssl: .openssl_build_done
 
 .openssl_configure_done:
 	(cd $(NGX_OPENSSL_SRC) \
+	&& cat .openssl_major_version
 	&& if [ -f Makefile ]; then $(MAKE) clean; fi \
 	&& if [ `cat .openssl_major_version` -le 1 && `cat .openssl_minor_version` -eq 0 ]; then ENABLE_TLSEXT='enable-tlsext'; fi \
 	&& ./config --prefix=$(NGX_OPENSSL_INSTALL_DIR) --shared zlib -fPIC ${ENABLE_TLSEXT} $(NGX_OPENSSL_OPT) \
