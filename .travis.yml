@@ -46,14 +46,14 @@ env:
 
 before_script:
   - default_openssl_version=1.1.1
-  - if [ "${OPENSSL_SRC_VERSION}" == "" ]; then openssl_version=${default_openssl_version}; else openssl_version=${OPENSSL_SRC_VERSION}"; fi
-  - echo "Building OpenSSL version:${openssl_version}"
-  - curl -sfL https://www.openssl.org/source/openssl-${openssl_version}-latest.tar.gz -o openssl-${openssl_version}.tar.gz
-  - mkdir openssl-${openssl_version} && tar -xzf openssl-${openssl_version}.tar.gz -C openssl-${openssl_version} --strip-components 1
-  - rm openssl-${openssl_version}.tar.gz
-  - cd openssl-${openssl_version}
-  - echo -n ${openssl_version} | awk -F '.' '{print $1}' > .openssl_major_version
-  - echo -n ${openssl_version} | awk -F '.' '{print $2}' > .openssl_minor_version
+  - if [ "${OPENSSL_SRC_VERSION}" == "" ]; then OPENSSL_SRC_VERSION=${default_openssl_version}; fi
+  - echo "Building OpenSSL version:${OPENSSL_SRC_VERSION}"
+  - curl -sfL https://www.openssl.org/source/openssl-${OPENSSL_SRC_VERSION}-latest.tar.gz -o openssl-${OPENSSL_SRC_VERSION}.tar.gz
+  - mkdir openssl-${OPENSSL_SRC_VERSION} && tar -xzf openssl-${OPENSSL_SRC_VERSION}.tar.gz -C openssl-${OPENSSL_SRC_VERSION} --strip-components 1
+  - rm openssl-${OPENSSL_SRC_VERSION}.tar.gz
+  - cd openssl-${OPENSSL_SRC_VERSION}
+  - echo -n ${OPENSSL_SRC_VERSION} | awk -F '.' '{print $1}' > .openssl_major_version
+  - echo -n ${OPENSSL_SRC_VERSION} | awk -F '.' '{print $2}' > .openssl_minor_version
   - ./config --prefix=/usr/local --shared zlib -fPIC >> /dev/null 2>&1
   - make >> /dev/null 2>&1
   - sudo make install >> /dev/null 2>&1
