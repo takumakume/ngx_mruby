@@ -137,7 +137,7 @@ openssl: .openssl_build_done
 .openssl_configure_done:
 	(cd $(NGX_OPENSSL_SRC) \
 	&& if [ -f Makefile ]; then $(MAKE) clean; fi \
-	&& OPENSSL_VERSION=`grep OPENSSL_VERSION_TEXT include/openssl/opensslv.h | grep -o 'OpenSSL [0-9].*' | head -1 | awk '{print $2}'`
+	&& OPENSSL_VERSION=`grep OPENSSL_VERSION_TEXT include/openssl/opensslv.h | grep -o 'OpenSSL [0-9].*' | head -1 | awk '{print $2}'` \
 	&& if [[ "${OPENSSL_VERSION}" =~ ^1\.0 ]]; then ENABLE_TLSEXT='enable-tlsext'; fi \
 	&& ./config --prefix=$(NGX_OPENSSL_INSTALL_DIR) --shared zlib -fPIC ${ENABLE_TLSEXT} $(NGX_OPENSSL_OPT) \
 	&& $(MAKE) depend) \
