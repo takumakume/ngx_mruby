@@ -136,8 +136,8 @@ openssl: .openssl_build_done
 .openssl_configure_done:
 	(cd $(NGX_OPENSSL_SRC) \
 	&& if [ -f Makefile ]; then $(MAKE) clean; fi \
-	&& OPENSSL_VERSION=`grep OPENSSL_VERSION_TEXT include/openssl/opensslv.h | grep -o 'OpenSSL [0-9].*' | head -1 | awk '{print $$2}'` \ # for OpenSSL-1.1	
-	&& if [ "$${OPENSSL_VERSION}" = "" ]; then OPENSSL_VERSION=`grep VERSION=[0-9] Makefile | head -1 | awk -F'=' '{print $$2}'`; fi \ # for OpenSSL-1.0
+	&& OPENSSL_VERSION=`grep OPENSSL_VERSION_TEXT include/openssl/opensslv.h | grep -o 'OpenSSL [0-9].*' | head -1 | awk '{print $$2}'` \
+	&& if [ "$${OPENSSL_VERSION}" = "" ]; then OPENSSL_VERSION=`grep VERSION=[0-9] Makefile | head -1 | awk -F'=' '{print $$2}'`; fi \
 	&& echo -n $${OPENSSL_VERSION} > openssl_version \
 	&& echo "Building OpenSSL version:$${OPENSSL_VERSION}" \
 	&& if [ `cat openssl_version | grep -o ^1.0` ]; then ENABLE_TLSEXT='enable-tlsext'; fi \
