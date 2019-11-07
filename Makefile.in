@@ -133,6 +133,9 @@ openssl: .openssl_build_done
 	&& if [ `echo $${OPENSSL_VERSION} | grep -o ^1.0` ]; then MAKE_TARGET='build_all install_sw'; fi \
 	&& echo "MAKE_TARGET:$${MAKE_TARGET}" \
 	&& $(MAKE) $${MAKE_TARGET}) \
+	&& echo "LD_LIBRARY_PATH:$${LD_LIBRARY_PATH}" \
+	&& export LD_LIBRARY_PATH=$(NGX_OPENSSL_INSTALL_DIR) \
+	&& echo "LD_LIBRARY_PATH:$${LD_LIBRARY_PATH}" \
 	&& cp /dev/null .openssl_build_done
 
 .openssl_configure_done:
