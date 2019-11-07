@@ -137,8 +137,8 @@ openssl: .openssl_build_done
 	(cd $(NGX_OPENSSL_SRC) \
 	&& if [ -f Makefile ]; then $(MAKE) clean; fi \
 	&& export OPENSSL_VERSION=`grep OPENSSL_VERSION_TEXT include/openssl/opensslv.h | grep -o 'OpenSSL [0-9].*' | head -1 | awk '{print $$2}'` \
-	&& if [ "$${OPENSSL_VERSION}" == "" ]; then export OPENSSL_VERSION=`grep VERSION=[0-9] Makefile | head -1 | awk -F'=' '{print $$2}'`; fi \
-	&& if [ "$${OPENSSL_VERSION}" == "" ]; then echo "Unknown OpenSSL version. Using default build option."; fi \
+	&& if [ "$${OPENSSL_VERSION}" = "" ]; then export OPENSSL_VERSION=`grep VERSION=[0-9] Makefile | head -1 | awk -F'=' '{print $$2}'`; fi \
+	&& if [ "$${OPENSSL_VERSION}" = "" ]; then echo "Unknown OpenSSL version. Using default build option."; fi \
 	&& echo "Building OpenSSL version:$${OPENSSL_VERSION}" \
 	&& if [ `echo $${OPENSSL_VERSION} | grep -o ^1.0` ]; then ENABLE_TLSEXT='enable-tlsext'; fi \
 	&& ./config --prefix=$(NGX_OPENSSL_INSTALL_DIR) --shared zlib -fPIC $${ENABLE_TLSEXT} $(NGX_OPENSSL_OPT) \
