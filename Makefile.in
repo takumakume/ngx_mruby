@@ -134,9 +134,10 @@ openssl: .openssl_build_done
 	&& echo "MAKE_TARGET:$${MAKE_TARGET}" \
 	&& $(MAKE) $${MAKE_TARGET}) \
 	&& echo "LD_LIBRARY_PATH:$${LD_LIBRARY_PATH}" \
-	&& export LD_LIBRARY_PATH=$(NGX_OPENSSL_INSTALL_DIR)/lib:$${LD_LIBRARY_PATH} \
+	&& export LD_LIBRARY_PATH=$(NGX_OPENSSL_INSTALL_DIR)/lib \
 	&& echo "LD_LIBRARY_PATH:$${LD_LIBRARY_PATH}" \
 	&& sudo ldconfig $(NGX_OPENSSL_INSTALL_DIR)/lib \
+	&& sudo ldconfig -p | grep ssl \
 	&& cp /dev/null .openssl_build_done
 
 .openssl_configure_done:
