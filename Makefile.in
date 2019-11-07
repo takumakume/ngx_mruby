@@ -134,7 +134,7 @@ openssl: .openssl_build_done
 	&& echo "MAKE_TARGET:$${MAKE_TARGET}" \
 	&& $(MAKE) $${MAKE_TARGET}) \
 	&& echo "LD_LIBRARY_PATH:$${LD_LIBRARY_PATH}" \
-	&& export LD_LIBRARY_PATH=$(NGX_OPENSSL_INSTALL_DIR) \
+	&& export LD_LIBRARY_PATH=$(NGX_OPENSSL_INSTALL_DIR)/.lib:$${LD_LIBRARY_PATH} \
 	&& echo "LD_LIBRARY_PATH:$${LD_LIBRARY_PATH}" \
 	&& cp /dev/null .openssl_build_done
 
