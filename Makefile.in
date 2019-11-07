@@ -141,6 +141,7 @@ openssl: .openssl_build_done
 	&& if [ "$${OPENSSL_VERSION}" = "" ]; then echo "Unknown OpenSSL version. Using default build option."; fi \
 	&& echo "Building OpenSSL version:$${OPENSSL_VERSION}" \
 	&& if [ `echo $${OPENSSL_VERSION} | grep -o ^1.0` ]; then ENABLE_TLSEXT='enable-tlsext'; fi \
+	&& echo "ENABLE_TLSEXT:$${ENABLE_TLSEXT}" \
 	&& ./config --prefix=$(NGX_OPENSSL_INSTALL_DIR) --shared zlib -fPIC $${ENABLE_TLSEXT} $(NGX_OPENSSL_OPT) \
 	&& $(MAKE) depend) \
 	&& cp /dev/null .openssl_configure_done
