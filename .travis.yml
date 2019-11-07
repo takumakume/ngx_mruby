@@ -46,14 +46,12 @@ env:
 
 before_script:
   - default_openssl_version=1.1.1
-  - if [ "${OPENSSL_SRC_VERSION}" == "" ]; then OPENSSL_SRC_VERSION=${default_openssl_version}; fi
+  - if [ "${OPENSSL_SRC_VERSION}" == "" ]; then export OPENSSL_SRC_VERSION=${default_openssl_version}; fi
   - echo "Building OpenSSL version:${OPENSSL_SRC_VERSION}"
   - curl -sfL https://www.openssl.org/source/openssl-${OPENSSL_SRC_VERSION}-latest.tar.gz -o openssl-${OPENSSL_SRC_VERSION}.tar.gz
   - mkdir openssl-${OPENSSL_SRC_VERSION} && tar -xzf openssl-${OPENSSL_SRC_VERSION}.tar.gz -C openssl-${OPENSSL_SRC_VERSION} --strip-components 1
   - rm openssl-${OPENSSL_SRC_VERSION}.tar.gz
   - cd openssl-${OPENSSL_SRC_VERSION}
-  - echo -n ${OPENSSL_SRC_VERSION} | awk -F '.' '{print $1}' > .openssl_major_version
-  - echo -n ${OPENSSL_SRC_VERSION} | awk -F '.' '{print $2}' > .openssl_minor_version
   - ./config --prefix=/usr/local --shared zlib -fPIC >> /dev/null 2>&1
   - make >> /dev/null 2>&1
   - sudo make install >> /dev/null 2>&1
@@ -66,7 +64,7 @@ script:
   - echo "NGINX_SRC_MINOR=${NGINX_SRC_MINOR}" >> nginx_version
   - echo "NGINX_SRC_PATCH=${NGINX_SRC_PATCH}" >> nginx_version
   - echo "NGINX_SRC_VER=nginx-${NGINX_SRC_MAJOR}.${NGINX_SRC_MINOR}.${NGINX_SRC_PATCH}" >> nginx_version
-  - if [ "${BUILD_WITH_OPENSSL_SRC}" == "TRUE" ]; then build_opts="--with-openssl-src=${PWD}/openssl-${openssl_version}"; fi
+  - if [ "${BUILD_WITH_OPENSSL_SRC}" == "TRUE" ]; then build_opts="--with-openssl-src=${PWD}/openssl-${OPENSSL_SRC_VERSION}"; fi
   - sh test.sh ${build_opts}
 
 after_failure:
