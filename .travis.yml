@@ -65,6 +65,7 @@ script:
   - echo "NGINX_SRC_PATCH=${NGINX_SRC_PATCH}" >> nginx_version
   - echo "NGINX_SRC_VER=nginx-${NGINX_SRC_MAJOR}.${NGINX_SRC_MINOR}.${NGINX_SRC_PATCH}" >> nginx_version
   - if [ "${BUILD_WITH_OPENSSL_SRC}" == "TRUE" ]; then build_opts="--with-openssl-src=${PWD}/openssl-${OPENSSL_SRC_VERSION}"; fi
+  - dpkg -l | grep -i ssl
   - sh test.sh ${build_opts}
 
 after_failure:
