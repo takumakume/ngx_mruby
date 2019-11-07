@@ -69,4 +69,5 @@ script:
   - sh test.sh ${build_opts}
 
 after_failure:
+  - cat Makefile
   - if [ -e build/nginx/logs/error.log ]; then cat build/nginx/logs/error.log ; else cat build_dynamic/nginx/logs/error.log; fi
