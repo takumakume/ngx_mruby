@@ -69,5 +69,6 @@ script:
   - sh test.sh ${build_opts}
 
 after_failure:
+  - ls -lR /home/travis/build/takumakume/ngx_mruby/openssl-1.0.2/.openssl/
   - cat Makefile
   - if [ -e build/nginx/logs/error.log ]; then cat build/nginx/logs/error.log ; else cat build_dynamic/nginx/logs/error.log; fi
