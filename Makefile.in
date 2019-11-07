@@ -131,6 +131,7 @@ openssl: .openssl_build_done
 	&& OPENSSL_VERSION=`grep OPENSSL_VERSION_TEXT include/openssl/opensslv.h | grep -o 'OpenSSL [0-9].*' | head -1 | awk '{print $$2}'` \
 	&& MAKE_TARGET='build_all_generated install_sw' \
 	&& if [ `echo $${OPENSSL_VERSION} | grep -o ^1.0` ]; then MAKE_TARGET='build_all install_sw'; fi \
+	&& echo "MAKE_TARGET:$${MAKE_TARGET}"
 	&& $(MAKE) $${MAKE_TARGET}) \
 	&& cp /dev/null .openssl_build_done
 
